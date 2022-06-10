@@ -3,13 +3,16 @@
 [![platform](https://img.shields.io/badge/platform-Node--RED-red)](https://nodered.org)
 ![NPM version](https://badge.fury.io/js/node-red-contrib-iiot-rpi-mcp342x.svg)
 ![NPM](https://img.shields.io/npm/l/node-red-contrib-iiot-mcp342x)
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ZDRCZBQFWV3A6)
 
-Node-Red node for mcp342x analog to digital converter<br>
+A Node-Red node for mcp342x analog to digital converter<br>
 
 ![image info](images/MCP3424.png)
 
 Example  **MCP3424** hat from [AB Electronics UK](https://www.abelectronics.co.uk/)
+
+![image info](images/MCP3421.png)
+
+Example **MCP3421** module
 
 ## Supported Devices
 - **mcp3421** 1-channel, 12bit-18bit, one I2C address
@@ -21,7 +24,7 @@ Example  **MCP3424** hat from [AB Electronics UK](https://www.abelectronics.co.u
 - **mcp3427** 2-channel, 12bit-16bit, eight I2C addresses
 - **mcp3428** 4-channel, 12bit-16bit, eight I2C addresses
 
-## Resolution and conversion Time
+## Resolution and conversion time
 - 12bit conversion time 5ms/channel
 - 14bit conversion time 25ms/channel
 - 16bit conversion time 100ms/channel
