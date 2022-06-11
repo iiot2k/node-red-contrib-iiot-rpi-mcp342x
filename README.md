@@ -42,3 +42,11 @@ npm install node-red-contrib-iiot-rpi-mcp342x
 - The output value is mV or adc raw data.
 - Set correct parameter depends on used device.
 - Enable I2C with raspi-config.
+
+## Test Enviroment
+- Raspberry Pi 4
+- Raspberry Pi OS (64bit) Debian v11 (bullseye)
+- Raspberry Pi OS (32bit) Debian v11 (bullseye)
+- Node-Red: v2.2.2
+- node.js: v14.19.3<br>
+If you have problems with other enviroments, open issue on github.
