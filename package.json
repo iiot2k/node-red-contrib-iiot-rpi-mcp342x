@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-iiot-rpi-mcp342x",
-  "version": "1.0.20",
+  "version": "1.0.21",
   "description": "A Node-Red node for mcp342x analog to digital converter",
 
   "dependencies": {
@@ -15,11 +15,12 @@
   "keywords": ["node-red", "raspberry pi", "rpi", "mcp342x",
     "mcp3421", "mcp3422", "mcp3423", "mcp3424",
     "mcp3425", "mcp3426", "mcp3427", "mcp3428",
-    "iot", "iiot", "analog"],
+    "iot", "iiot", "analog", "adc"],
 
   "node-red": {
     "nodes": {
-      "iiot-mcp342x": "mcp342x.js"
+      "iiot-mcp342x": "mcp342x.js",
+      "iiot-mcp342x-m": "mcp342x-m.js"
     }
   },
 

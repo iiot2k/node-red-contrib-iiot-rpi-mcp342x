@@ -1,0 +1,175 @@
+<!--
+  Copyright 2022 Ocean (iiot2k@gmail.com).
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<script type="text/javascript">
+    RED.nodes.registerType('mcp342x-m', {
+        category: 'iiot modules',
+        color: 'Coral',
+        paletteLabel: 'mcp342x-m',
+        defaults: {
+            name:     { value:"" },
+            devtype:  { value: "4", required: true },
+            devadr:   { value: "0", required: true },
+            mode:     { value: "0", required: true },
+            gain1:    { value: "0", required: true },
+            gain2:    { value: "0", required: true },
+            gain3:    { value: "0", required: true },
+            gain4:    { value: "0", required: true },
+            tupdate:  { value: 1000, required: true, validate: function (v) { return RED.validators.number(v) && (v >= 10) && (v <= 5000); } },
+            onchange: { value: true },
+            rawdata:  { value: false },
+        },
+        inputs: 0,
+        outputs: 1,
+        outputLabels: ["numeric array"],
+        icon: "voltmeter.png",
+        labelStyle: function() { return this.name ? "node_label_italic" : ""; },
+        label: function () {
+            return this.name || "mcp342" + this.devtype + "-m @" + (0x68 + parseInt(this.devadr)).toString(16).toUpperCase();
+        },
+    });
+</script>
+
+<script type="text/html" data-template-name="mcp342x-m">
+    <div class="form-row">
+        <label style="width:100%; border-bottom: 2px solid rgb(0, 0, 0);"><b>MCP342x Analog to Digital Converter (Multi)</b></label>
+    </div>
+    <div class="form-row">
+        <label for="node-input-devtype"><b>Device Type</b></label>
+        <select type="text" id="node-input-devtype" style="width: auto;">
+            <option value="1">mcp3421</option>
+            <option value="2">mcp3422</option>
+            <option value="3">mcp3423</option>
+            <option value="4">mcp3424</option>
+            <option value="5">mcp3425</option>
+            <option value="6">mcp3426</option>
+            <option value="7">mcp3427</option>
+            <option value="8">mcp3428</option>
+        </select>
+    </div>
+    <div id="div-devadr" class="form-row">
+        <label for="node-input-devadr"><b>I2C Address</b></label>
+        <select type="text" id="node-input-devadr" style="width: auto;">
+            <option value="0">68H</option>
+            <option value="1">69H</option>
+            <option value="2">6AH</option>
+            <option value="3">6BH</option>
+            <option value="4">6CH</option>
+            <option value="5">6DH</option>
+            <option value="6">6EH</option>
+            <option value="7">6FH</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-mode"><b>Resolution</b></label>
+        <select type="text" id="node-input-mode" style="width: auto;">
+            <option value="0">12bit</option>
+            <option value="1">14bit</option>
+            <option value="2">16bit</option>
+            <option value="3">18bit</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-gain1"><b>Inp. #1 Range</b></label>
+        <select type="text" id="node-input-gain1" style="width: auto;">
+            <option value="0">±2048mV</option>
+            <option value="1">±1024mV</option>
+            <option value="2">±512mV</option>
+            <option value="3">±256mV</option>
+            <option value="4">Off</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-gain2"><b>Inp. #2 Range</b></label>
+        <select type="text" id="node-input-gain2" style="width: auto;">
+            <option value="0">±2048mV</option>
+            <option value="1">±1024mV</option>
+            <option value="2">±512mV</option>
+            <option value="3">±256mV</option>
+            <option value="4">Off</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-gain3"><b>Inp. #3 Range</b></label>
+        <select type="text" id="node-input-gain3" style="width: auto;">
+            <option value="0">±2048mV</option>
+            <option value="1">±1024mV</option>
+            <option value="2">±512mV</option>
+            <option value="3">±256mV</option>
+            <option value="4">Off</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-gain4"><b>Inp. #4 Range</b></label>
+        <select type="text" id="node-input-gain4" style="width: auto;">
+            <option value="0">±2048mV</option>
+            <option value="1">±1024mV</option>
+            <option value="2">±512mV</option>
+            <option value="3">±256mV</option>
+            <option value="4">Off</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-tupdate"><b>Read Cycle</b></label>
+        <input id="node-input-tupdate" input type="number" min="10" max="5000" required style="width: auto;">
+        <label for="node-input-tupdate"> ms</label>
+    </div>
+    <div class="form-row">
+        <label for="node-input-onchange"><b>On Change</b></label>
+        <input type="checkbox" id="node-input-onchange" title="Send message when value changes" style="display: inline-block; width: auto; vertical-align: top;">
+    </div>
+    <div class="form-row">
+        <label for="node-input-rawdata"><b>Raw Data</b></label>
+        <input type="checkbox" id="node-input-rawdata" title="Send value as raw data" style="display: inline-block; width: auto; vertical-align: top;">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><b>Name</b></label>
+        <input id="node-input-name" type="text" title="Give this node a name">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="mcp342x-m">
+    <p>MCP342x Analog to Digital Converter (Multi)</p>
+    <h3><b>Output:</b></h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number array</span></dt>
+    </dl>
+    <h3><b>Details:</b></h3>
+    <p>
+        Reads on cycle analog inputs.<br><br>
+        Supported Devices:<br>
+        <b>mcp3421</b> 1-channel, 12bit-18bit, @68H<br>
+        <b>mcp3422</b> 2-channel, 12bit-18bit, @68H<br>
+        <b>mcp3423</b> 2-channel, 12bit-18bit, @68H-6FH<br>
+        <b>mcp3424</b> 4-channel, 12bit-18bit, @68H-6FH<br>
+        <b>mcp3425</b> 1-channel, 12bit-16bit, @68H<br>
+        <b>mcp3426</b> 2-channel, 12bit-16bit, @68H<br>
+        <b>mcp3427</b> 2-channel, 12bit-16bit, @68H-6FH<br>
+        <b>mcp3428</b> 4-channel, 12bit-16bit, @68H-6FH<br>
+        <p class="form-tips">
+            This node works on Raspberry Pi<br>
+            with 32bit or 64bit OS.<br>
+            Sends all channel values as array.<br>
+            For send message when value changes<br>
+            select <b>On Change</b>.<br>
+            To get adc raw data select <b>Raw Data.</b><br>
+            The output value is mV or adc raw data.<br>
+            Set correct parameter depends<br>
+            on used device.<br>
+            Enable I2C with raspi-config.<br>
+        </p>
+	</p>
+</script>
